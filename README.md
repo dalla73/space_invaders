@@ -125,3 +125,7 @@ sempre visíveis.
 Space Invaders é criação da Taito, de 1978. Este é um tributo não oficial: código,
 sprites redesenhados e som foram escritos para este repositório, sem assets
 originais.
+
+---
+
+Versão 1.0 — By Dalla
