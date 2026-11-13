@@ -18,6 +18,13 @@
   const ctx = canvas.getContext('2d');
   ctx.imageSmoothingEnabled = false;
 
+  const reduceMotion = !!(window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+  function blinkOn() {
+    return reduceMotion || Math.floor(time * 2.2) % 2 === 0;
+  }
+
   const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
   const rnd = (a, b) => a + Math.random() * (b - a);
   const irnd = (a, b) => Math.floor(rnd(a, b + 1));
@@ -740,7 +747,7 @@
     drawHud();
 
     if (state === 'waveclear') {
-      if (Math.floor(time * 3) % 2 === 0) {
+      if (blinkOn()) {
         text('WAVE ' + (wave + 1), W / 2, 352, 4, '#ffffff', 'center');
       }
     }
@@ -760,7 +767,7 @@
       text('GAME OVER', W / 2, 292, 5, '#ffffff', 'center');
       text('SCORE ' + pad(score, 5), W / 2, 372, 3, '#ffffff', 'center');
       text('HI ' + pad(hi, 5), W / 2, 416, 3, '#ffffff', 'center');
-      if (Math.floor(time * 2.2) % 2 === 0) {
+      if (blinkOn()) {
         text('PRESS ENTER', W / 2, 486, 2, '#ffffff', 'center');
       }
     }
@@ -788,7 +795,7 @@
       text(r.label, 230, r.y + 4, 2);
     }
 
-    if (Math.floor(time * 2.2) % 2 === 0) {
+    if (blinkOn()) {
       text('PRESS SPACE', W / 2, 520, 3, '#ffffff', 'center');
     }
     text('ARROWS MOVE  SPACE FIRE', W / 2, 584, 2, '#ffffff', 'center');
@@ -829,7 +836,7 @@
     ctx.fillRect(0, 0, W, H);
 
     ctx.save();
-    if (shake > 0.01) {
+    if (shake > 0.01 && !reduceMotion) {
       ctx.translate(Math.round((Math.random() - 0.5) * 9 * shake), Math.round((Math.random() - 0.5) * 9 * shake));
     }
     drawStars();
